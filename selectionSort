@@ -16,7 +16,7 @@ int selectionSort(int *arr, int n)
 	}
 }
 int main() {
-	// Bubble Sort
+	// Selection Sort
 	int arr[10] = {1, 10, 5, 8, 7, 6, 4, 3, 2, 9};
 	int i;
 	selectionSort(arr,10);
