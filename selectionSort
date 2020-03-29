@@ -4,9 +4,9 @@ int selectionSort(int *arr, int n)
 	int i,j,temp;
 	int indexMin;
 	
-	for(i = 0;i < 9;i++){
+	for(i = 0;i < n-1;i++){
 		indexMin = i;
-		for(j = i + 1;j < 10;j++){
+		for(j = i + 1;j < n;j++){
 			if(arr[indexMin] > arr[j])
 				indexMin = j;
 		}
@@ -16,7 +16,7 @@ int selectionSort(int *arr, int n)
 	}
 }
 int main() {
-	// Selection Sort
+	// Bubble Sort
 	int arr[10] = {1, 10, 5, 8, 7, 6, 4, 3, 2, 9};
 	int i;
 	selectionSort(arr,10);
