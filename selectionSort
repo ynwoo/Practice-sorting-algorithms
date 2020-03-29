@@ -1,0 +1,28 @@
+#include <stdio.h>
+int selectionSort(int *arr, int n)
+{
+	int i,j,temp;
+	int indexMin;
+	
+	for(i = 0;i < 9;i++){
+		indexMin = i;
+		for(j = i + 1;j < 10;j++){
+			if(arr[indexMin] > arr[j])
+				indexMin = j;
+		}
+		temp = arr[i];
+		arr[i] = arr[indexMin];
+		arr[indexMin] =temp;
+	}
+}
+int main() {
+	// Selection Sort
+	int arr[10] = {1, 10, 5, 8, 7, 6, 4, 3, 2, 9};
+	int i;
+	selectionSort(arr,10);
+	
+	for(i=0;i<10;i++)
+		printf("%d ",arr[i]);
+	
+	return 0;
+}
