@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct User{
+	int age;
+	char name[101];
+} user;
+
+user b[100001];
+
+void merge(user *arr, int left, int right, int middle)
+{
+	//빈 리스트가 필요하다 -> 전역변수로 선언
+	int i = left;
+	int j = middle + 1;
+	int k = left;
+
+	while(i <= middle && j <= right){
+		if(arr[i].age <= arr[j].age){
+			memcpy(&b[k],&arr[i],sizeof(user));
+			//b[k] = arr[i];
+			i++;
+		}
+		else{
+			memcpy(&b[k],&arr[j],sizeof(user));
+			//b[k] = arr[j];
+			j++;
+		}
+		k++;
+	}
+	
+	if(i > middle){
+		for(int t = j ; t <= right ; t++){
+			memcpy(&b[k],&arr[t],sizeof(user));
+			//b[k] = arr[t];
+			k++;
+		}
+	}
+	else{
+		for(int t = i ; t <= middle ; t++){
+			memcpy(&b[k],&arr[t],sizeof(user));
+			//b[k] = arr[t];
+			k++;
+		}
+	}
+	for(int t = left ; t <=right ; t++)
+		memcpy(&arr[t],&b[t],sizeof(user));
+		//arr[t] = b[t];
+	
+	
+}
+void mergeSort(user *arr, int l, int r)
+{
+	int middle = (l+r)/2;
+	if(l < r){
+		mergeSort(arr, l, middle);
+		mergeSort(arr, middle + 1, r);
+		merge(arr, l, r, middle);
+	}
+	
+}
+int main() {
+	int n;
+	user arr[100001];
+	scanf("%d",&n);
+	
+	for(int i=0;i<n;i++){
+		scanf("%d %s",&(arr[i].age),(arr[i].name));
+	}
+	
+	mergeSort(arr,0,n-1);
+	
+	for(int i=0;i<n;i++){
+		printf("%d %s\n",(arr[i].age),(arr[i].name));
+	}
+	
+	return 0;
+}
