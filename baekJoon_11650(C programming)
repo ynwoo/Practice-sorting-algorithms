@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct point{
+	int x,y;
+} point;
+point b[100000];
+void merge(point *arr, int left, int right, int middle)
+{
+	//빈 리스트가 필요하다 -> 전역변수로 선언
+	int i = left;
+	int j = middle + 1;
+	int k = left;
+
+	while(i <= middle && j <= right){
+		if(arr[i].x < arr[j].x){
+			memcpy(&b[k],&arr[i],sizeof(point));
+			//b[k] = arr[i];
+			i++;
+		}
+		
+		else if(arr[i].x == arr[j].x){
+			if(arr[i].y <= arr[j].y){
+				memcpy(&b[k],&arr[i],sizeof(point));
+				//b[k] = arr[i];
+				i++;
+			}
+			else{
+				memcpy(&b[k],&arr[j],sizeof(point));
+				//b[k] = arr[j];
+				j++;	
+			}
+		}	
+		
+		else{
+			memcpy(&b[k],&arr[j],sizeof(point));
+			//b[k] = arr[j];
+			j++;
+		}
+		
+		k++;
+	}
+	
+	if(i > middle){
+		for(int t = j ; t <= right ; t++){
+			memcpy(&b[k],&arr[t],sizeof(point));
+			//b[k] = arr[t];
+			k++;
+		}
+	}
+	else{
+		for(int t = i ; t <= middle ; t++){
+			memcpy(&b[k],&arr[t],sizeof(point));
+			//b[k] = arr[t];
+			k++;
+		}
+	}
+	for(int t = left ; t <=right ; t++)
+		memcpy(&arr[t],&b[t],sizeof(point));
+		//arr[t] = b[t];
+	
+	
+}
+
+void mergeSort(point *arr, int l, int r)
+{
+	int middle = (l+r)/2;
+	if(l < r){
+		mergeSort(arr, l, middle);
+		mergeSort(arr, middle + 1, r);
+		merge(arr, l, r, middle);
+	}
+}
+
+int main() {
+	int n;
+	point arr[100000];
+	scanf("%d",&n);
+	;
+	for(int i=0;i<n;i++){
+		scanf("%d %d",&(arr[i].x),&(arr[i].y));
+	}
+	
+	mergeSort(arr,0,n-1);
+	
+	for(int i=0;i<n;i++){
+		printf("%d %d\n",(arr[i].x),(arr[i].y));
+	}
+	
+	return 0;
+}
